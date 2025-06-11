@@ -6,13 +6,17 @@ from player import Player
 def main():
 	# Initialize Pygame
 	pygame.init()
-
 	# Create the screen
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
 	# Create a clock
 	clock = pygame.time.Clock()
 	dt = 0
+
+	# groups
+	updatable = pygame.sprite.Group()
+	drawables = pygame.sprite.Group()
+
+	Player.containers = (updatable, drawables)
 
 	# create a player
 	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -22,14 +26,19 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
+			
+		# update the objects
+		updatable.update(dt)
 
+		# fill the screen with black
 		screen.fill((0, 0, 0))
-		player.draw(screen)
-		player.update(dt)
+
+		# draw the objects
+		for obj in drawables:
+			obj.draw(screen)
 
 		# do this last
 		pygame.display.flip()
-
 		dt = clock.tick(60) / 1000
 
 if __name__ == "__main__":
