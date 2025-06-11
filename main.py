@@ -25,7 +25,8 @@ def main():
 
 		screen.fill((0, 0, 0))
 		player.draw(screen)
-		
+		player.update(dt)
+
 		# do this last
 		pygame.display.flip()
 
